@@ -16,11 +16,14 @@
   "license": "ISC",
   "author": "Solomon Bekele",
   "type": "commonjs",
-  "main": "App.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
     "parcel": "^2.16.1"
+  },
+  "dependencies": {
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
   }
 }

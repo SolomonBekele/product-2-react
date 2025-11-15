@@ -1,21 +1,24 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import  Header  from "./components/Header";
-import  Body  from "./components/Body";
 
-const AppLayout =() =>{
+import ReactDOM from "react-dom/client";
+import { BrowserRouter,Routes,Route } from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import AboutPage from "./components/About";
+import ContactPage from "./components/Contact";
+import NotFound from "./pages/ErrorPage";
+
+const App =() =>{
   return (
-  <div className="app font-serif p-2">
-    <Header/>
-    <Body/>
-  
-  </div>
+     <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/about" element={<AboutPage />} />
+      <Route path="/contact" element={<ContactPage />} />
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   )
 }
+export default App;
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
-// root.render(headingJsx);
-root.render(<AppLayout/>)
+
 
 
 

@@ -8,6 +8,7 @@ import react from "react";
 
 const Body = () => {
   const [restaurantData, setRestaurantData] = useState([]);
+  const [tempRestaurantData, setTempRestaurantData] = useState([]);
   const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
@@ -22,33 +23,27 @@ const Body = () => {
 
     // restuarants.array.forEach(element => console.log(element))
     setRestaurantData(restuarants);
+    setTempRestaurantData(restuarants);
   };
-
+// console.log(tempRestaurantData);
   return  (
     <div className="body">
       <div className=" flex justify-around m-2 text-sm">
         <div className="search ">
           <input
             type="text"
-            className="border-y border-s"
+            className="border-y border-s px-1"
             value={searchText}
             onChange={(e) => {
               setSearchText(e.target.value);
-              console.log(searchText);
-           
-              const restaurantData4 = restaurantData.filter((data) =>
-                data.info.name.toLowerCase().includes(searchText.toLowerCase())
-              );
-              setRestaurantData(restaurantData4);
-             
+                 
           }
           }
           />
           <button
             className="bg-black text-white border border-black rounded-r-lg px-2"
             onClick={() => {
-             
-              const restaurantData3 = restaurantData.filter((data) =>
+              const restaurantData3 = tempRestaurantData.filter((data) =>
                 data.info.name.toLowerCase().includes(searchText.toLowerCase())
               );
               setRestaurantData(restaurantData3);

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const Header = () => {
   const [butName, setButName] = useState("Login");
   return (
-    <div className="header flex justify-between items-center border border-black  ">
+    <div className="header flex justify-between items-center border border-black mb-2 ">
       <div className="logo-container w-40  rounded-2xl">
         <img className="logo " src={LOGO_URL} alt="logo" />
       </div>

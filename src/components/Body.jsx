@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { SWIGGY_API_URL, SWIGGY_REST_API_PATH } from "../utils/constants";
 import Shimmer from "./shimmer";
 import react from "react";
+import { Link } from "react-router-dom";
 
 
 const Body = () => {
@@ -68,8 +69,14 @@ const Body = () => {
       </div>
       {restaurantData?.length===0 ? <Shimmer/> :
       <div className="restuarant-container flex justify-center  flex-wrap container mx-auto gap-4">
-        {restaurantData.map((restuarant, index) => (
-          <RestaurantCard key={restuarant?.info?.id} {...restuarant?.info} />
+        {restaurantData.map((restaurant, index) => (
+          <Link
+                to={"/restaurant/" + restaurant?.info?.id}
+                key={restaurant?.info?.id}
+              >
+                {console.log(restaurant?.info?.id)}
+          <RestaurantCard key={restaurant?.info?.id} {...restaurant?.info} />
+          </Link>
         ))}
       </div>
        }

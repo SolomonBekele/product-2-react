@@ -4,29 +4,39 @@ import { useState, useEffect } from "react";
 import { SWIGGY_API_URL, SWIGGY_REST_API_PATH } from "../utils/constants";
 import Shimmer from "./shimmer";
 import react from "react";
+import { Link } from "react-router-dom";
+import useResData from "../hooks/useResData";
+import useOnlineStatus from "../hooks/useOnlineStatus";
 
 
 const Body = () => {
-  const [restaurantData, setRestaurantData] = useState([]);
-  const [tempRestaurantData, setTempRestaurantData] = useState([]);
+  const [restaurantData,AllfilResData] = useResData();
+  const [filteredRestaurantData, setFilteredRestaurantData] = useState(null);
   const [searchText, setSearchText] = useState("");
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
-    const res = await fetch(SWIGGY_API_URL);
-    const data = await res.json();
-
-    const restuarants = eval("data?." + SWIGGY_REST_API_PATH) || [];
-
-    // restuarants.array.forEach(element => console.log(element))
-    setRestaurantData(restuarants);
-    setTempRestaurantData(restuarants);
+  const filterData = (searchText, restaurants) => {
+    const resFilterData = restaurants.filter((restaurant) =>
+      restaurant?.info?.name.toLowerCase().includes(searchText.toLowerCase())
+    );
+    return resFilterData;
+  }
+  
+  const searchData = (searchText, restaurants) => {
+    if (searchText !== "") {
+      const filteredData = filterData(searchText, restaurants);
+      setFilteredRestaurantData(filteredData);
+      if (filteredData?.length === 0) {
+        // setErrorMessage(
+        //   `Sorry, we couldn't find any results for "${searchText}"`
+        // );
+      }
+    } else {
+      setFilteredRestaurantData(restaurants);
+    }
   };
-// console.log(tempRestaurantData);
-  return  (
+
+  return restaurantData?.length===0 && AllfilResData?.length === 0 ? (<Shimmer/>) : (
+    
     <div className="body">
       <div className=" flex justify-around m-2 text-sm">
         <div className="search ">
@@ -35,18 +45,15 @@ const Body = () => {
             className="border-y border-s px-1"
             value={searchText}
             onChange={(e) => {
-              setSearchText(e.target.value);
-                 
+              setSearchText(e.target.value);      
+              searchData(e.target.value, restaurantData);
           }
           }
           />
           <button
             className="bg-black text-white border border-black rounded-r-lg px-2"
             onClick={() => {
-              const restaurantData3 = tempRestaurantData.filter((data) =>
-                data.info.name.toLowerCase().includes(searchText.toLowerCase())
-              );
-              setRestaurantData(restaurantData3);
+              searchData(searchText, restaurantData);
             }}
           >
             Search
@@ -59,20 +66,23 @@ const Body = () => {
               const restuarantData2 = restaurantData.filter(
                 (rest) => rest.info?.avgRating > 4.5
               );
-              setRestaurantData(restuarantData2);
+              setFilteredRestaurantData(restuarantData2);
             }}
           >
             Top Rated Restaurant
           </button>
         </div>
       </div>
-      {restaurantData?.length===0 ? <Shimmer/> :
       <div className="restuarant-container flex justify-center  flex-wrap container mx-auto gap-4">
-        {restaurantData.map((restuarant, index) => (
-          <RestaurantCard key={restuarant?.info?.id} {...restuarant?.info} />
+        {(filteredRestaurantData === null ? AllfilResData : filteredRestaurantData).map((restaurant) => (
+          <Link
+                to={"/restaurant/" + restaurant?.info?.id}
+                key={restaurant?.info?.id}
+              >
+          <RestaurantCard key={restaurant?.info?.id} {...restaurant?.info} />
+          </Link>
         ))}
       </div>
-       }
     </div>
   );
 };

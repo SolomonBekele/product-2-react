@@ -1,16 +1,21 @@
 import { useState } from "react";
 import { LOGO_URL } from "../utils/constants";
 import { Link } from "react-router-dom";
+import useOnlineStatus from "../hooks/useOnlineStatus";
 
 const Header = () => {
   const [butName, setButName] = useState("Login");
+  const isOnline = useOnlineStatus()
   return (
     <div className="header flex justify-between items-center border border-black mb-2 ">
+      {console.log("object", isOnline)}
       <div className="logo-container w-40  rounded-2xl">
         <img className="logo " src={LOGO_URL} alt="logo" />
       </div>
       <div className="nav-items">
         <ul className="flex gap-4 mr-20 text-lg font-light">
+         {/* <li>{isOnline ? "🟢" : "🔴"}</li> */}
+
           <li>
             <Link to="/">Home</Link>
           </li>

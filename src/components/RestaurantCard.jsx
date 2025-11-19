@@ -10,11 +10,11 @@ const RestaurantCard = ({
 }) => {
   return (
      <div
-      className="restaurant-card w-[180px] h-[270px] bg-slate-100 px-1 text-sm 
-                    hover:border border-black hover:cursor-pointer"
+      className="restaurant-card w-[170px] h-[270px] bg-slate-100 px-1 text-sm 
+                    hover:border border-black hover:cursor-pointer rounded-md"
     >
       <img
-        className="my-1 mx-auto w-[160px] h-[120px] object-cover"
+        className=" mx-auto w-[160px] h-[120px] object-cover rounded-md py-1"
         src={
           cloudinaryImageId?.startsWith("http")
             ? cloudinaryImageId

@@ -5,6 +5,7 @@ import Contact from "./components/Contact";
 import Error from "./pages/ErrorPage";
 import Body from "./components/Body";
 import RestaurantMenu from "./components/RestaurantMenu";
+import AboutClass from "./components/AboutClass";
 
 const router = createBrowserRouter([
   {

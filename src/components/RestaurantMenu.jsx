@@ -1,52 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { MENU_API_URL, PROXY, RESTAURANT_MENU, SWIGGY_MENU_API_URL,IMG_CDN_URL, RESTAURANT_TYPE_KEY, MENU_ITEM_TYPE_KEY, LOCAL_MENU_API } from '../utils/constants'
+import {IMG_CDN_URL, MENU_ITEM_TYPE_KEY } from '../utils/constants'
 import { MenuShimmer } from './shimmer'
 import { MdStarRate } from "react-icons/md";
 import { useParams } from 'react-router-dom'
 import ItemCard from './ItemCard';
+import useResMenuData from '../hooks/useResMenuData';
 
 const RestaurantMenu = () => {
   const {resId}= useParams();
-  const [resInfo,setResInfo] = useState(null)
-  const [menuItems, setMenuItems] = useState([]);
-  const [open, setOpen] = useState(false);
-  
-  
-  useEffect(()=>{
-    fetchRestaurantMenu()
-  },[])
-  const fetchRestaurantMenu = async ()=>{
-try {
-  console.log("object");
-     const res = await fetch(LOCAL_MENU_API + resId );
-      console.log(res);
-       const json = await res.json();
-      console.log(json)
-      const restaurantData = json?.data?.cards?.map(x => x.card)?.
-                             find(x => x && x.card['@type'] === RESTAURANT_TYPE_KEY)?.card?.info || null;
-      setResInfo(restaurantData);
-
-      setResInfo(json.data);
-
-      // Set menu item data
-      const menuItemsData = json?.data?.cards.find(x=> x.groupedCard)?.
-                            groupedCard?.cardGroupMap?.REGULAR?.
-                            cards?.map(x => x.card?.card)?.
-                            filter(x=> x['@type'] == MENU_ITEM_TYPE_KEY)?.
-                            map(x=> x.itemCards).flat().map(x=> x.card?.info) || [];
-      
-      const uniqueMenuItems = [];
-      menuItemsData.forEach((item) => {
-        if (!uniqueMenuItems.find(x => x.id === item.id)) {
-          uniqueMenuItems.push(item);
-        }
-      })
-      setMenuItems(uniqueMenuItems);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
-
+  const [resInfo,menuItems] =useResMenuData(resId)
   const {
     cloudinaryImageId,
     name,
@@ -55,7 +17,7 @@ try {
     cuisines,
     locality,
     sla,
-  } = resInfo?.cards[2]?.card?.card?.info || {};
+  } = resInfo || {};
   return resInfo===null ? <MenuShimmer/> :
   (
     <div className="menu">
@@ -95,7 +57,7 @@ try {
 
       {/* Items container */}
 
-        <div className="items mt-3 space-y-3 flex flex-col gap-3">
+        <div className="items mt-3 space-y-3 grid lg:grid-cols-3 md:grid-cols-2  2xl:grid-cols-4">
           {menuItems.map((item) => (
             <ItemCard key={item.id} {...item} />
           ))}

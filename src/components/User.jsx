@@ -13,6 +13,7 @@ const fetchUser = async () =>{
 }
   return (
     <div>
+        <img className="w-20 rounded-full" src={user.avatar_url} alt="" />
         <h2>Name: {user.name}</h2>
         <h2>Location: {user.location}</h2>
         <h2>Contact: @solubman</h2>

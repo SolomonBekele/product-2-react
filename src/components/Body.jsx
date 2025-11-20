@@ -1,4 +1,4 @@
-import RestaurantCard from "./RestaurantCard";
+import RestaurantCard,{withPromotedLabel} from "./RestaurantCard";
 import { foodData } from "../utils/mockData";
 import { useState, useEffect } from "react";
 import { SWIGGY_API_URL, SWIGGY_REST_API_PATH } from "../utils/constants";
@@ -13,6 +13,7 @@ const Body = () => {
   const [restaurantData,AllfilResData] = useResData();
   const [filteredRestaurantData, setFilteredRestaurantData] = useState(null);
   const [searchText, setSearchText] = useState("");
+  const RestaurantCardPromoted = withPromotedLabel(RestaurantCard);
 
   const filterData = (searchText, restaurants) => {
     const resFilterData = restaurants.filter((restaurant) =>
@@ -79,7 +80,11 @@ const Body = () => {
                 to={"/restaurant/" + restaurant?.info?.id}
                 key={restaurant?.info?.id}
               >
-          <RestaurantCard key={restaurant?.info?.id} {...restaurant?.info} />
+                {restaurant?.info.totalRatingsString > "4.7" ? (
+                  <RestaurantCardPromoted key={restaurant?.info?.id} {...restaurant?.info}/>
+                ) : (
+                <RestaurantCard key={restaurant?.info?.id} {...restaurant?.info} />
+              )}
           </Link>
         ))}
       </div>

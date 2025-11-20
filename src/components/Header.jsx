@@ -8,7 +8,6 @@ const Header = () => {
   const isOnline = useOnlineStatus()
   return (
     <div className="header flex justify-between items-center border border-black mb-2 ">
-      {console.log("object", isOnline)}
       <div className="logo-container w-40  rounded-2xl">
         <img className="logo " src={LOGO_URL} alt="logo" />
       </div>
@@ -29,7 +28,7 @@ const Header = () => {
           </li>
 
           <li>
-            <Link to="/">Cart</Link>
+            <Link to="/grocery">Grocery</Link>
           </li>
 
           <button

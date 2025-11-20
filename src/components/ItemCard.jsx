@@ -1,7 +1,8 @@
 import React from "react";
 import { IMG_CDN_URL } from "../utils/constants";
 
-const ItemCard = ({ imageId, name,price,description}) => {
+const ItemCard = ({ imageId, name,defaultPrice,description}) => {
+   
   return (
     <div className=" mx-5  p-2 text-sm  h-60">
       <div className="flex justify-between my-2">
@@ -9,11 +10,11 @@ const ItemCard = ({ imageId, name,price,description}) => {
           <h1>{name}</h1>
           <p className="item-desc">{description}</p>
             <p className="item-cost">
-                {price > 0
+                {defaultPrice > 0
           ? new Intl.NumberFormat("en-IN", {
               style: "currency",
               currency: "INR",
-            }).format(price / 100)
+            }).format(defaultPrice / 100)
           : " "}
       </p>
       

@@ -57,7 +57,7 @@ const RestaurantMenu = () => {
 
       {/* Items container */}
 
-        <div className="items mt-3 space-y-3 grid lg:grid-cols-3 md:grid-cols-2  2xl:grid-cols-4">
+        <div className="items mt-3 space-y-3 ">
           {menuItems.map((item) => (
             <ItemCard key={item.id} {...item} />
           ))}

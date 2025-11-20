@@ -58,7 +58,6 @@ const RestaurantMenu = () => {
       {/* Items container */}
 
         <div className="items mt-3 space-y-3 ">
-          {console.log(menuItems)}
           {menuItems.map((item) => (
             <ItemCard key={item.id} {...item} />
           ))}

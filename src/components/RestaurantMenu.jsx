@@ -1,14 +1,22 @@
-import React, { useEffect, useState } from 'react'
-import {IMG_CDN_URL, MENU_ITEM_TYPE_KEY } from '../utils/constants'
-import { MenuShimmer } from './shimmer'
+import { useParams } from "react-router-dom";
+import { useState } from "react";
+import useRestaurantMenuData from "../hooks/useRestaurantMenuData";
+import RestaurantMenuCategory from "./RestaurantMenuCategory";
+import { RestaurantMenuShimmer } from "./Shimmer";
+
 import { MdStarRate } from "react-icons/md";
-import { useParams } from 'react-router-dom'
-import ItemCard from './ItemCard';
-import useResMenuData from '../hooks/useResMenuData';
+import { IMG_CDN_URL } from "../utils/constants";
 
 const RestaurantMenu = () => {
-  const {resId}= useParams();
-  const [resInfo,menuItems] =useResMenuData(resId)
+  const { resId } = useParams();
+  const restaurantInfo = useRestaurantMenuData(resId);
+
+  const [showIndex, setShowIndex] = useState(0);
+
+  if (restaurantInfo === null) {
+    return <RestaurantMenuShimmer />;
+  }
+
   const {
     cloudinaryImageId,
     name,
@@ -17,57 +25,65 @@ const RestaurantMenu = () => {
     cuisines,
     locality,
     sla,
-  } = resInfo || {};
-  return resInfo===null ? <MenuShimmer/> :
-  (
-    <div className="menu">
-      <div className="restaurant-header flex  justify-center gap-20 items-center">
-        <img className='h-80 w-80 rounded-full' src={IMG_CDN_URL + cloudinaryImageId} alt={name} />
-        <div className="restaurant-header-details ">
-          <h1>{name}</h1>
-          <h3>{locality}</h3>
-          <p>{cuisines?.join(", ")}</p>
-          <h4 className="rating-time">
-            <div className="rating">
+  } = restaurantInfo?.cards[2]?.card?.card?.info || {};
+
+  const cards =
+    restaurantInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards || [];
+
+  const categories = cards.filter(
+    (c) =>
+      c?.card?.["card"]?.["@type"] ===
+      "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
+  );
+
+  return (
+    <div className="w-[90%] mx-auto">
+      <div className="w-full flex items-center bg-black text-white shadow-md p-[20px] rounded-[8px] mb-[30px] overflow-hidden">
+        <img
+          className="w-[250px] h-[150px] object-cover rounded-[8px] mr-[40px] hover:scale-[1.1] transition-transform duration-300 ease-in-out"
+          src={IMG_CDN_URL + cloudinaryImageId}
+          alt={name}
+        />
+
+        <div className="flex flex-col justify-center gap-[5px">
+          <h1 className="text-[20px] font-bold">{name}</h1>
+          <h3 className="text-[#bcbcbc] font-semibold text-[17px]">
+            {locality}
+          </h3>
+          <p className="text-[15px] text-[#c1b9b9]">{cuisines?.join(", ")}</p>
+
+          <h4 className="text-[#eceaea] flex gap-[20px] font-semibold">
+            <div className="flex items-center">
               <MdStarRate
-                className="rating-logo"
-                style={{
-                  backgroundColor:
-                    avgRatingString >= 4.0 ? "var(--green)" : "var(--red)",
-                }}
+                className="w-[18px] h-[18px] rounded-[50%] p-[2px] mr-[5px]"
+                style={
+                  avgRatingString > 4.0
+                    ? { backgroundColor: "green" }
+                    : { backgroundColor: "red" }
+                }
               />
               <span>
                 {avgRatingString || 3.8} ({totalRatingsString || "1K+ ratings"})
               </span>
             </div>
-            {/* <span>|</span> */}
+            <span>|</span>
             <span className="time">{sla?.slaString}</span>
           </h4>
         </div>
       </div>
-      <div className="w-full">
-      {/* Dropdown button */}
-      <div
-        
-        className="px-4 py-2  rounded-md  w-full flex"
-      >
-       <p className='m-auto'>{`Recommended(${menuItems.length})`}</p> 
 
-      </div>
-
-      {/* Items container */}
-
-        <div className="items mt-3 space-y-3 ">
-          {menuItems.map((item) => (
-            <ItemCard key={item.id} {...item} />
-          ))}
-        </div>
-     
+      {/* Category Accordians */}
+      {categories.map((category, index) => (
+        // Controlled Component
+        <RestaurantMenuCategory
+          key={category?.card?.card?.title}
+          data={category?.card?.card}
+          showMenuItems={index === showIndex}
+          setShowIndex={() => setShowIndex(index === showIndex ? null : index)}
+        />
+      ))}
     </div>
-      </div>
-      
-      
-  )
-}
+  );
+};
 
-export default RestaurantMenu
+export default RestaurantMenu;

@@ -8,6 +8,7 @@ import RestaurantMenu from "./components/RestaurantMenu";
 import AboutClass from "./components/AboutClass";
 import { lazy, Suspense } from "react";
 
+
 const Grocery = lazy(() => import("./components/Grocery"))
 
 const router = createBrowserRouter([

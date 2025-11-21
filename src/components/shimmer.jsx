@@ -1,69 +1,42 @@
-
-import { shimmer_card_unit,shimmer_menu_card_unit } from "../utils/constants";
-
-const CardShimmer = () => {
+export const RestaurantShimmer = () => {
   return (
-    <div className="shimmer-card basis-[250px] p-2">
-      <div className="shimmer-img stroke animate"></div>
-      <div className="shimmer-title stroke animate"></div>
-      <div className="shimmer-tags stroke animate "></div>
-      <div className="shimmer-details stroke animate "></div>
+    <div className="w-[90%] flex flex-col items-center transition-all">
+      <div className="w-[50%] h-[50px] bg-[#cecccc] rounded-lg mb-[30px]"></div>
+      <div className="flex flex-wrap justify-center items-center gap-x-[1.5%] gap-y-[25px]">
+        <div className="w-[250px] h-[300px] bg-[#cecccc] rounded-[8px]"></div>
+        <div className="w-[250px] h-[300px] bg-[#cecccc] rounded-[8px]"></div>
+        <div className="w-[250px] h-[300px] bg-[#cecccc] rounded-[8px]"></div>
+        <div className="w-[250px] h-[300px] bg-[#cecccc] rounded-[8px]"></div>
+        <div className="w-[250px] h-[300px] bg-[#cecccc] rounded-[8px]"></div>
+        <div className="w-[250px] h-[300px] bg-[#cecccc] rounded-[8px]"></div>
+        <div className="w-[250px] h-[300px] bg-[#cecccc] rounded-[8px]"></div>
+        <div className="w-[250px] h-[300px] bg-[#cecccc] rounded-[8px]"></div>
+        <div className="w-[250px] h-[300px] bg-[#cecccc] rounded-[8px]"></div>
+        <div className="w-[250px] h-[300px] bg-[#cecccc] rounded-[8px]"></div>
+        <div className="w-[250px] h-[300px] bg-[#cecccc] rounded-[8px]"></div>
+        <div className="w-[250px] h-[300px] bg-[#cecccc] rounded-[8px]"></div>
+        <div className="w-[250px] h-[300px] bg-[#cecccc] rounded-[8px]"></div>
+        <div className="w-[250px] h-[300px] bg-[#cecccc] rounded-[8px]"></div>
+        <div className="w-[250px] h-[300px] bg-[#cecccc] rounded-[8px]"></div>
+        <div className="w-[250px] h-[300px] bg-[#cecccc] rounded-[8px]"></div>
+      </div>
     </div>
   );
 };
 
-export const MenuShimmer = () => {
+export const RestaurantMenuShimmer = () => {
   return (
-    <div className="restaurant-menu">
-      <div className="restaurant-summary stroke-color animate">
-        <img className="shimmer-img stroke animate" />
-        <div className="restaurant-summary-details">
-          <h2 className="shimmer-w40  stroke animate"></h2>
-          <p className="shimmer-w20 stroke animate"></p>
-          <div className="shimmer-w60  stroke animate">
-          </div>
-        </div>
-      </div>
-
-      <div className="restaurant-menu-content">
-        <div className="menu-items-container">
-          <div className="menu-title-wrap ">
-            <h3 className="shimmer-w40 stroke animate"></h3>
-            <p className="shimmer-w20 stroke animate"></p>
-          </div>
-          <div className="menu-items-list">
-            { Array(shimmer_menu_card_unit).fill("").map( (element, index)  => 
-            <div className="shimmer-menu-card" key={index.toString() + 1}>
-              <div className="shimmer-item-details">
-                <h3 className="shimmer-w40  stroke animate"></h3>
-                <p className="shimmer-w20  stroke animate"> </p>
-                <p className="shimmer-w60  stroke animate"></p>
-              </div>
-              <div className="shimmer-img-wrapper">
-                <img className="shimmer-img stroke animate" /> 
-                <div className="shimmer-btn stroke animate"> </div>
-              </div>
-            </div>
-            )}
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-const Shimmer = () => {
-  return (
-    <div className="shimmer-container flex justify-center flex-wrap g-25">
-      {/* create a new Array instance using Array() constructor and map through every element of array */}
-      {Array(shimmer_card_unit).fill("").map((element, index) => {
-        return <CardShimmer key={index.toString() + 1} />;
-      })}
+    <div className="w-[60%] flex flex-wrap items-center justify-center gap-[30px]">
+      <div className="w-[100%] h-[200px] bg-[#cecccc] rounded-[8px]"></div>
+      <div className="w-[100%] h-[200px] bg-[#cecccc] rounded-[8px]"></div>
+      <div className="w-[100%] h-[200px] bg-[#cecccc] rounded-[8px]"></div>
+      <div className="w-[100%] h-[200px] bg-[#cecccc] rounded-[8px]"></div>
+      <div className="w-[100%] h-[200px] bg-[#cecccc] rounded-[8px]"></div>
+      <div className="w-[100%] h-[200px] bg-[#cecccc] rounded-[8px]"></div>
+      <div className="w-[100%] h-[200px] bg-[#cecccc] rounded-[8px]"></div>
+      <div className="w-[100%] h-[200px] bg-[#cecccc] rounded-[8px]"></div>
+      <div className="w-[100%] h-[200px] bg-[#cecccc] rounded-[8px]"></div>
+      <div className="w-[100%] h-[200px] bg-[#cecccc] rounded-[8px]"></div>
     </div>
   );
 };
-
-
-
-export default Shimmer;
-

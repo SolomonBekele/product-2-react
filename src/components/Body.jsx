@@ -2,11 +2,12 @@ import RestaurantCard,{withPromotedLabel} from "./RestaurantCard";
 import { foodData } from "../utils/mockData";
 import { useState, useEffect } from "react";
 import { SWIGGY_API_URL, SWIGGY_REST_API_PATH } from "../utils/constants";
-import Shimmer from "./shimmer";
 import react from "react";
 import { Link } from "react-router-dom";
 import useResData from "../hooks/useResData";
 import useOnlineStatus from "../hooks/useOnlineStatus";
+import { RestaurantShimmer } from "./Shimmer";
+import { useUserContext } from "../context/userContext";
 
 
 const Body = () => {
@@ -14,6 +15,7 @@ const Body = () => {
   const [filteredRestaurantData, setFilteredRestaurantData] = useState(null);
   const [searchText, setSearchText] = useState("");
   const RestaurantCardPromoted = withPromotedLabel(RestaurantCard);
+  const {authUser}= useUserContext();
 
   const filterData = (searchText, restaurants) => {
     const resFilterData = restaurants.filter((restaurant) =>
@@ -36,7 +38,7 @@ const Body = () => {
     }
   };
 
-  return restaurantData?.length===0 && AllfilResData?.length === 0 ? (<Shimmer/>) : (
+  return restaurantData?.length===0 && AllfilResData?.length === 0 ? (<RestaurantShimmer/>) : (
     
     <div className="body">
       <div className=" flex justify-around m-2 text-sm">
@@ -60,6 +62,7 @@ const Body = () => {
             Search
           </button>
         </div>
+        <h1>{authUser}</h1>
         <div className="top-rated-restaurant ">
           <button
             className="px-2 border rounded bg-black text-white"

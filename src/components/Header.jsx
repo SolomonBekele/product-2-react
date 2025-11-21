@@ -2,10 +2,12 @@ import { useState } from "react";
 import { LOGO_URL } from "../utils/constants";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../hooks/useOnlineStatus";
+import { useUserContext } from "../context/userContext";
 
 const Header = () => {
   const [butName, setButName] = useState("Login");
   const isOnline = useOnlineStatus()
+  const {setAuthUser} = useUserContext();
   return (
     <div className="header flex justify-between items-center border border-black mb-2 ">
       <div className="logo-container w-40  rounded-2xl">
@@ -34,6 +36,8 @@ const Header = () => {
           <button
             onClick={() => {
               butName === "Login" ? setButName("Logout") : setButName("Login");
+              setAuthUser('hey');
+
             }}
             className="border rounded px-2 bg-black text-white"
           >

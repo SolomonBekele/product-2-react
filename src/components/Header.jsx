@@ -3,11 +3,13 @@ import { LOGO_URL } from "../utils/constants";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../hooks/useOnlineStatus";
 import { useUserContext } from "../context/userContext";
+import { useSelector } from "react-redux";
 
 const Header = () => {
   const [butName, setButName] = useState("Login");
   const isOnline = useOnlineStatus()
   const {setAuthUser} = useUserContext();
+  const cartItems = useSelector((store)=>store.cart.items);
   return (
     <div className="header flex justify-between items-center border border-black mb-2 ">
       <div className="logo-container w-40  rounded-2xl">
@@ -27,6 +29,9 @@ const Header = () => {
 
           <li>
             <Link to="/contact">Contact us</Link>
+          </li>
+          <li>
+            <Link to="/cart">cart-{cartItems.length}</Link>
           </li>
 
           <li>

@@ -1,10 +1,16 @@
 import { MdStarRate } from "react-icons/md";
 import { IMG_CDN_URL } from "../utils/constants";
+import { addItem } from "../store/cartSlice";
+import { useDispatch } from "react-redux";
 
 const RestaurantMenuItemList = ({ items }) => {
+  const dispatch = useDispatch();
+  const handleAddItems = item =>{
+    dispatch(addItem(item))
+  }  
   return (
     <div>
-      {items.map((item) => {
+      {items.map((item) => { 
         const { id, name, price, defaultPrice, ratings, imageId, description } =
           item.card.info;
         const avgRatingString = ratings?.aggregatedRating?.rating || 3.8;
@@ -44,7 +50,8 @@ const RestaurantMenuItemList = ({ items }) => {
                 src={IMG_CDN_URL + imageId}
                 alt={name}
               />
-              <button className="text-green-600 bg-white font-semibold rounded-md text-[1.2rem] px-[30px] py-[5px] cursor-pointer border-none relative bottom-[15px] hover:bg-gray-300 hover:text-green-800 transition-all 0.3s">
+              <button className="text-green-600 bg-white font-semibold rounded-md text-[1.2rem] px-[30px] py-[5px] cursor-pointer border-none relative bottom-[15px] hover:bg-gray-300 hover:text-green-800 transition-all 0.3s"
+              onClick={()=>{handleAddItems(item)}}>
                 ADD
               </button>
             </div>
